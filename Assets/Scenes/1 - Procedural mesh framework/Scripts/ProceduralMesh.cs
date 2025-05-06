@@ -7,6 +7,9 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class ProceduralMesh : MonoBehaviour
 {
+    [SerializeField, Range(1, 10)]
+    private int resolution = 1;
+    
     Mesh mesh;
 
 	void Awake()
@@ -24,8 +27,19 @@ public class ProceduralMesh : MonoBehaviour
 
         meshData.subMeshCount = 1;
 
-        MeshJob<SquareGrid, SingleStream>.ScheduleParallel(mesh, meshData, default).Complete();
+        MeshJob<SquareGrid, SingleStream>.ScheduleParallel(mesh, meshData, resolution, default).Complete();
 
         Mesh.ApplyAndDisposeWritableMeshData(meshDataArray, mesh);
+    }
+
+    void Update()
+    {
+        GenerateMesh();
+        enabled = false;
+    }
+
+    void OnValidate()
+    {
+        enabled = true;
     }
 }
