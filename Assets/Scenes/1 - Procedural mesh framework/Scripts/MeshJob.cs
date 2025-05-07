@@ -29,9 +29,15 @@ namespace ProceduralMeshes
         {
             var job = new MeshJob<G, S>();
             job.generator.Resolution = resolution;
-            job.streams.Setup(meshData, mesh.bounds = job.generator.Bounds, job.generator.VertexCount, job.generator.IndexCount);
+            mesh.bounds = job.generator.Bounds;
+            job.streams.Setup(meshData, job.generator.Bounds, job.generator.VertexCount, job.generator.IndexCount);
 
             return job.ScheduleParallel(job.generator.JobLength, 1, dependency);
         }
     }
+
+    // make ProceduralMesh.cs general by using delegates instead of static mesh jobs
+    public delegate JobHandle MeshJobScheduleDelegate(
+        Mesh mesh, Mesh.MeshData meshData, int resolution, JobHandle dependency
+    );
 }

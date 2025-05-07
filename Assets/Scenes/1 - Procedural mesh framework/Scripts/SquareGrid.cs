@@ -13,7 +13,7 @@ namespace ProceduralMeshes.Generators
 
         public int JobLength => Resolution;
 
-        public Bounds Bounds => new Bounds(new Vector3(0.5f, 0.5f), new Vector3(1, 0, 1));
+        public Bounds Bounds => new Bounds(new Vector3(0.5f, 0.5f), new Vector3(1, 0, 1));  // bounds are glitched
 
         public int Resolution { get; set; }
 
